@@ -31,10 +31,13 @@ Nov. 16th
 - Creating installable Haskell app
 - Reading files
 - Displaying stylized characters on terminal
+
 Nov. 23rd Project updates
 - Implement basic features (emphasis, color, lists, links)
+
 Nov. 30th
 - Keep working
+
 Dec. 7th Project Presentation
 - Record presentation
 
