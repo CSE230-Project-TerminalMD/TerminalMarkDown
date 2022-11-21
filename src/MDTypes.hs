@@ -1,5 +1,5 @@
 module MDTypes
-(MarkDownType)
+(MarkDownType(..))
 where
 
 import qualified Data.Tree as T

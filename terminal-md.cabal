@@ -27,6 +27,7 @@ library
   exposed-modules:
       MDTypes
       Parser.MDParser
+      Visualizer.ElementVisualizer
       Visualizer.MDVisualizer
   other-modules:
       Paths_terminal_md
@@ -37,6 +38,7 @@ library
       base >=4.7 && <5
     , brick >=1.0
     , containers
+    , vty
   default-language: Haskell2010
 
 executable terminal-md-exe
@@ -51,6 +53,7 @@ executable terminal-md-exe
     , brick >=1.0
     , containers
     , terminal-md
+    , vty
   default-language: Haskell2010
 
 test-suite terminal-md-test
@@ -66,4 +69,5 @@ test-suite terminal-md-test
     , brick >=1.0
     , containers
     , terminal-md
+    , vty
   default-language: Haskell2010

@@ -1,8 +1,40 @@
 module Visualizer.MDVisualizer
-(visualizeMD)
+(startTMD)
 where
 
 import qualified MDTypes as MDT
+import Visualizer.ElementVisualizer
+import Graphics.Vty.Attributes (defAttr)
+import Brick.Main as M
+import Brick
 
-visualizeMD :: [MDT.MarkDownType] -> Maybe String -- Not know right now
-visualizeMD  = error "Developing"
+-- Naive Implementation for App State
+data MDAppState = MDAppState {
+  mds :: [MDT.MarkDownType],
+  layout :: String,
+  anime :: String,
+  exit :: Bool
+}
+
+getAppState :: [MDT.MarkDownType] -> IO (MDAppState)
+getAppState mds = return $ MDAppState mds "" "" True
+
+visualizeMD :: MDAppState -> [Widget ()]
+visualizeMD (MDAppState mds l a _) = [ui]
+  where
+    ui = vBox $ map visualizeElement mds
+
+-- Main App for terminal markdown
+tmdApp :: M.App MDAppState e ()
+tmdApp = M.App {
+  M.appDraw = visualizeMD,
+  M.appHandleEvent = M.resizeOrQuit,
+  M.appStartEvent = return (),
+  M.appAttrMap = const $ attrMap defAttr [],
+  M.appChooseCursor = M.neverShowCursor
+}
+
+startTMD :: [MDT.MarkDownType] -> IO MDAppState
+startTMD mds = do
+    cur <- getAppState mds
+    M.defaultMain tmdApp cur
