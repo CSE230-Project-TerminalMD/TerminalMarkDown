@@ -4,7 +4,6 @@ where
 
 import qualified MDTypes as MDT
 import Visualizer.ElementVisualizer
-import Graphics.Vty.Attributes (defAttr)
 import Brick.Main as M
 import Brick
 
@@ -30,7 +29,7 @@ tmdApp = M.App {
   M.appDraw = visualizeMD,
   M.appHandleEvent = M.resizeOrQuit,
   M.appStartEvent = return (),
-  M.appAttrMap = const $ attrMap defAttr [],
+  M.appAttrMap = const elementAttr,
   M.appChooseCursor = M.neverShowCursor
 }
 

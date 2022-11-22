@@ -7,5 +7,8 @@ import MDTypes as MDT
 
 main :: IO ()
 main = do
-  V.startTMD [Text "" "" "Hello world"]
+  V.startTMD [Header "" "SimpleDemo",
+              Text "" "" "Hello world",
+              Highlight "" "Quan",
+              Lists ["I list something", "I list another"]]
   return ()
