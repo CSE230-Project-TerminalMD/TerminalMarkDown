@@ -24,9 +24,9 @@ toText prefix s = MDT.Text "" "" $ prefix ++ s
 visualizeElement :: MDT.MarkDownType -> Widget ()
 visualizeElement (MDT.Text f c s) = str s
 
-visualizeElement (MDT.Header l s) = withAttr (attrName $ "Header1") $ str s
+visualizeElement (MDT.Header l s) = vBox [str "\n", withAttr (attrName "Header1") $ str s, str "\n"]
 
-visualizeElement (MDT.Highlight c s) = withAttr (attrName $ "highlight") $ str s
+visualizeElement (MDT.Highlight c s) = withAttr (attrName "highlight") $ str s
 
 visualizeElement (MDT.SplitLine) = str ""
 

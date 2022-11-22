@@ -4,6 +4,7 @@ where
 
 import qualified MDTypes as MDT
 import Visualizer.ElementVisualizer
+import qualified Brick.Widgets.Center as C
 import Brick.Main as M
 import Brick
 
@@ -21,7 +22,7 @@ getAppState mds = return $ MDAppState mds "" "" True
 visualizeMD :: MDAppState -> [Widget ()]
 visualizeMD (MDAppState mds l a _) = [ui]
   where
-    ui = vBox $ map visualizeElement mds
+    ui = C.center $ vBox $ map visualizeElement mds
 
 -- Main App for terminal markdown
 tmdApp :: M.App MDAppState e ()
