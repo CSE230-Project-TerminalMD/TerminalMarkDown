@@ -23,7 +23,7 @@ dependencies:
 - base >= 4.7 && < 5
 - containers
 - vty
-- brick >= 1.0
+- brick >= 0.65
 
 ghc-options:
 - -Wall

@@ -1,5 +1,7 @@
 module MDTypes
-(MarkDownType(..))
+(MarkDownType(..),
+Slide,
+Slides)
 where
 
 data MarkDownType =
@@ -12,3 +14,6 @@ data MarkDownType =
 type Level = String
 type Color = String -- For now
 type Font = String -- For now
+
+type Slide = [MarkDownType]
+type Slides = [Slide]
