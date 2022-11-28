@@ -17,6 +17,7 @@ data TextStyleType =
   | Error String
   deriving (Show)
 
+-- Should be able to marge to above
 data MarkDownType =
     Header Level [TextStyleType]
   | ListBullet Level [TextStyleType]
