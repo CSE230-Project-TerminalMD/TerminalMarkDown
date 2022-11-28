@@ -24,6 +24,8 @@ dependencies:
 - containers
 - vty
 - brick >= 0.65
+- parsec
+- split
 
 ghc-options:
 - -Wall
