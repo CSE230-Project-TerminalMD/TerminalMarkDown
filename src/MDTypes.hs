@@ -14,12 +14,12 @@ data TextStyleType =
   | Strikethrough String
   | Underline String
   | InlineCode String
+  | Error String
   deriving (Show)
 
 data MarkDownType =
     Header Level [TextStyleType]
   | ListBullet Level [TextStyleType]
-  | Highlight [TextStyleType]
   | PlainText [TextStyleType]
   | Quote [TextStyleType]
   deriving (Show)
