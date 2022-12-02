@@ -15,7 +15,7 @@ main = runTests
 parserTests :: Score -> TestTree
 parserTests sc = testGroup "Parser Tests"
     [
-        scoreTest ((\_ -> parseNoEither "Simple Plain"), (), [Plain "Simple dPlain"], 2, "plain text")
+        scoreTest ((\_ -> parseNoEither "Simple Plain"), (), [Plain "Simple Plain"], 2, "plain text")
     ]
     where
         scoreTest :: (Show b, Eq b) => (a -> b, a, b, Int, String) -> TestTree
