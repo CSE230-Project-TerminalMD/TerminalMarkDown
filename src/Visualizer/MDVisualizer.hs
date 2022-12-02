@@ -1,50 +1,52 @@
 module Visualizer.MDVisualizer
+(startTMD)
 where
--- (startTMD)
--- where
 
--- import qualified MDTypes as MDT
--- import Visualizer.ElementVisualizer
--- import qualified Brick.Widgets.Center as C
--- import Brick.Main as M
--- import qualified Graphics.Vty as V
--- import qualified Brick.Types as T
--- import Brick
+import qualified MDTypes as MDT
+import Visualizer.ElementVisualizer
+import qualified Brick.Widgets.Center as C
+import Brick.Main as M
+import qualified Graphics.Vty as V
+import qualified Brick.Types as T
+import Brick
 
--- -- Naive Implementation for App State
--- data MDAppState = MDAppState {
---   mds :: MDT.Slides,
---   cur :: Int,
---   layout :: String,
---   anime :: String,
---   exit :: Bool
--- }
+-- Naive Implementation for App State
+data MDAppState = MDAppState {
+  mds :: MDT.Slides,
+  cur :: Int,
+  layout :: String,
+  anime :: String
+}
 
--- initialState :: MDT.Slides -> IO (MDAppState)
--- initialState mds = return $ MDAppState mds 0 "" "" True
+initialState :: MDT.Slides -> IO (MDAppState)
+initialState mds = return $ MDAppState mds 0 "" ""
 
--- visualizeMD :: MDAppState -> [Widget ()]
--- visualizeMD (MDAppState mds i l a _) = [ui]
---   where
---     ui = C.center $ vBox $ map visualizeElement (mds!!i)
+visualizeMD :: MDAppState -> [Widget ()]
+visualizeMD (MDAppState mds i l a) = [ui]
+  where
+    ui = C.center $ vBox $ map visualizeElement (mds!!i)
 
--- -- Main App for terminal markdown
--- handleSlideEvent :: MDAppState -> BrickEvent () e -> EventM () (Next MDAppState)
--- handleSlideEvent s@(MDAppState mds i l a e) (VtyEvent (V.EvKey V.KDown []))
---   | e = continue s
---   | otherwise = halt s
--- handleSlideEvent s _ = halt s
+-- Main App for terminal markdown
+handleSlideEvent :: MDAppState -> BrickEvent () e -> EventM () (Next MDAppState)
+handleSlideEvent s@(MDAppState mds i l a) (VtyEvent (V.EvKey V.KDown []))
+  | i+1<length mds = continue (MDAppState mds (i+1) l a)
+  | otherwise = halt s
+handleSlideEvent s@(MDAppState mds i l a) (VtyEvent (V.EvKey V.KUp []))
+  | i-1>=0 = continue (MDAppState mds (i-1) l a)
+  | otherwise = halt s
+handleSlideEvent s (VtyEvent (V.EvKey V.KEsc [])) = halt s
+handleSlideEvent s _ = continue s
 
--- tmdApp :: M.App MDAppState e ()
--- tmdApp = M.App {
---   M.appDraw = visualizeMD,
---   M.appHandleEvent = handleSlideEvent,
---   M.appStartEvent = return,
---   M.appAttrMap = const elementAttr,
---   M.appChooseCursor = M.neverShowCursor
--- }
+tmdApp :: M.App MDAppState e ()
+tmdApp = M.App {
+  M.appDraw = visualizeMD,
+  M.appHandleEvent = handleSlideEvent,
+  M.appStartEvent = return,
+  M.appAttrMap = const elementAttr,
+  M.appChooseCursor = M.neverShowCursor
+}
 
--- startTMD :: MDT.Slides -> IO MDAppState
--- startTMD mds = do
---     cur <- initialState mds
---     M.defaultMain tmdApp cur
+startTMD :: MDT.Slides -> IO MDAppState
+startTMD mds = do
+    cur <- initialState mds
+    M.defaultMain tmdApp cur

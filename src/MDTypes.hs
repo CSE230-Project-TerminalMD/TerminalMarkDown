@@ -1,11 +1,9 @@
-module MDTypes where
-
--- data MarkDownType =
---     Header Level String
---   | Lists [String]
---   | Highlight Color String
---   | Text Font Color String
---   | SplitLine
+module MDTypes 
+(TextStyleType(..),
+MarkDownType(..),
+Slide,
+Slides)
+where
 
 data TextStyleType = 
     Plain String
@@ -26,8 +24,6 @@ data MarkDownType =
   deriving (Show)
 
 type Level = String
-type Color = String -- For now
-type Font = String -- For now
 
 type Slide = [MarkDownType]
 type Slides = [Slide]
