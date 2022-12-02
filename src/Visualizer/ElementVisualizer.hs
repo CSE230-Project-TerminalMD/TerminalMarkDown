@@ -40,6 +40,7 @@ elementAttr = attrMap defAttr $
                                                       , (attrName "Underline", underline)
                                                       , (attrName "Strikethrough", strikethrough)]]
 
+-- TextStyle Visualizer
 visualizeTextStyle :: AttrName -> TextStyleType -> Widget ()
 visualizeTextStyle a (Bold s) = withAttr (a <> attrName "Bold") (str s)
 visualizeTextStyle a (Plain s) = withAttr a (str s)
@@ -49,6 +50,7 @@ visualizeTextStyle a (Strikethrough s) = withAttr (a <> attrName "Strikethrough"
 visualizeTextStyle _ (InlineCode s) = forceAttr (attrName "InlineCode") (str s)
 visualizeTextStyle _ _ = str "wait for implement"
 
+-- Element Visualizer
 visualizeElement :: MarkDownType -> Widget ()
 visualizeElement (Header "1" ts) = border $ hBox $ map (visualizeTextStyle (attrName "Header1")) ts
 visualizeElement (Header level ts) = hBox $ map (visualizeTextStyle (attrName curHeader)) ts
