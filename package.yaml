@@ -62,3 +62,9 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - terminal-md
+    - QuickCheck
+    - tasty
+    - tasty-hunit
+    - tasty-quickcheck
+    - process
+    - filepath

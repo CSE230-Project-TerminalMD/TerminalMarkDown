@@ -13,7 +13,7 @@ data TextStyleType =
   | Underline String
   | InlineCode String
   | Error String
-  deriving (Show)
+  deriving (Eq, Show)
 
 -- Should be able to marge to above
 data MarkDownType =

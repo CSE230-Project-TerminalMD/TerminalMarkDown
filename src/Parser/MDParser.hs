@@ -1,5 +1,7 @@
 module Parser.MDParser
-(parseSlide)
+(parseSlide,
+parseStylePlain,
+parseNoEither)
 where
 
 import qualified MDTypes as MDT
