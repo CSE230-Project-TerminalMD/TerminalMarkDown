@@ -15,24 +15,27 @@ data MDAppState = MDAppState {
   mds :: MDT.Slides,
   cur :: Int,
   layout :: String,
-  anime :: String,
-  exit :: Bool
+  anime :: String
 }
 
 initialState :: MDT.Slides -> IO (MDAppState)
-initialState mds = return $ MDAppState mds 0 "" "" True
+initialState mds = return $ MDAppState mds 0 "" ""
 
 visualizeMD :: MDAppState -> [Widget ()]
-visualizeMD (MDAppState mds i l a _) = [ui]
+visualizeMD (MDAppState mds i l a) = [ui]
   where
     ui = C.center $ vBox $ map visualizeElement (mds!!i)
 
 -- Main App for terminal markdown
 handleSlideEvent :: MDAppState -> BrickEvent () e -> EventM () (Next MDAppState)
-handleSlideEvent s@(MDAppState mds i l a e) (VtyEvent (V.EvKey V.KDown []))
-  | e = continue s
+handleSlideEvent s@(MDAppState mds i l a) (VtyEvent (V.EvKey V.KDown []))
+  | i+1<length mds = continue (MDAppState mds (i+1) l a)
   | otherwise = halt s
-handleSlideEvent s _ = halt s
+handleSlideEvent s@(MDAppState mds i l a) (VtyEvent (V.EvKey V.KUp []))
+  | i-1>=0 = continue (MDAppState mds (i-1) l a)
+  | otherwise = halt s
+handleSlideEvent s (VtyEvent (V.EvKey V.KEsc [])) = halt s
+handleSlideEvent s _ = continue s
 
 tmdApp :: M.App MDAppState e ()
 tmdApp = M.App {
