@@ -7,6 +7,7 @@ import MDTypes
 import Brick
 import Graphics.Vty.Attributes
 import Data.Bifunctor
+import Brick.Widgets.Border
 import Graphics.Vty
   ( Attr, white, blue, cyan, green, red, yellow
   , black, withURL
@@ -44,9 +45,12 @@ visualizeTextStyle a (Bold s) = withAttr (a <> attrName "Bold") (str s)
 visualizeTextStyle a (Plain s) = withAttr a (str s)
 visualizeTextStyle a (Italic s) = withAttr (a <> attrName "Italic") (str s)
 visualizeTextStyle a (Underline s) = withAttr (a <> attrName "Underline") (str s)
+visualizeTextStyle a (Strikethrough s) = withAttr (a <> attrName "Strikethrough") (str s)
+visualizeTextStyle _ (InlineCode s) = forceAttr (attrName "InlineCode") (str s)
 visualizeTextStyle _ _ = str "wait for implement"
 
 visualizeElement :: MarkDownType -> Widget ()
+visualizeElement (Header "1" ts) = border $ hBox $ map (visualizeTextStyle (attrName "Header1")) ts
 visualizeElement (Header level ts) = hBox $ map (visualizeTextStyle (attrName curHeader)) ts
     where
         curHeader = "Header" ++ level

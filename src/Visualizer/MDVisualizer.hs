@@ -24,7 +24,7 @@ initialState mds = return $ MDAppState mds 0 "" ""
 visualizeMD :: MDAppState -> [Widget ()]
 visualizeMD (MDAppState mds i l a) = [ui]
   where
-    ui = C.center $ vBox $ map visualizeElement (mds!!i)
+    ui = vBox  (map (C.center . visualizeElement) (mds!!i))
 
 -- Main App for terminal markdown
 handleSlideEvent :: MDAppState -> BrickEvent () e -> EventM () (Next MDAppState)
