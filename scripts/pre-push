@@ -1,4 +1,4 @@
-error_lines=$(stack test | grep "Error" | wc -l)
+error_lines=$(stack test | grep "Failure" | wc -l)
 if [ "$error_lines"="0" ]
 then
 	exit 0
