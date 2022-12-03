@@ -16,6 +16,7 @@ import Data.Graph (components)
 import qualified Data.Text as T
 import qualified Brick.Widgets.Border.Style as BS
 import Visualizer.BigHeader
+import Brick.Widgets.Center (hCenter, vCenter)
 
 borderStyles :: [(T.Text, BS.BorderStyle)]
 borderStyles =
@@ -64,7 +65,7 @@ visualizeTextStyle _ _ = str "wait for implement"
 
 -- Element Visualizer
 visualizeElement :: MarkDownType -> Widget ()
-visualizeElement (BigHeader s) = hBox $ map (str . fontChar) s
+visualizeElement (BigHeader s) = vLimit 8 $ vCenter $ hBox $ map (str . fontChar) s
 visualizeElement (Header level ts) = hBox $ withAttr (attrName curHeader) (str prefix):map (visualizeTextStyle (attrName curHeader)) ts
     where
         curHeader = "Header" ++ show level

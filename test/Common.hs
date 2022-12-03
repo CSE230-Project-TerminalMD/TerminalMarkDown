@@ -22,7 +22,7 @@ runTests groups = do
   -- defaultMain (tests sc groups) `catch` (\(e :: ExitCode) -> do
   defaultMain (localOption (mkTimeout 1000000) (tests sc groups)) `catch` (\(e :: ExitCode) -> do
     (n, tot) <- readIORef sc
-    putStrLn ("OVERALL SCORE = " ++ show n ++ " / "++ show tot)
+    putStrLn ("OVERALL PASSED TESTS = " ++ show n ++ " / "++ show tot)
     throwIO e)
 
 tests :: Score -> [Score -> TestTree] -> TestTree

@@ -1,5 +1,7 @@
 <bhr>terminal  markdown</bhr>
 
+Hey I'm terminal markdown
+
 ---
 
 # TerminalMarkDown **bold here** another text *italic* something
