@@ -21,9 +21,10 @@ data MarkDownType =
   | ListBullet Level [TextStyleType]
   | PlainText [TextStyleType]
   | Quote [TextStyleType]
+  | BigHeader String
   deriving (Show)
 
-type Level = String
+type Level = Int
 
 type Slide = [MarkDownType]
 type Slides = [Slide]

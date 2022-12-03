@@ -1,7 +1,18 @@
+<bhr>terminal  markdown</bhr>
+
+---
+
 # TerminalMarkDown **bold here** another text *italic* something
 
-test<u>underline</u>*test*
-```more codes```
+## Header 2
+
+### Header 3
+
+#### Header 4
+
+##### Header 5 but it's still Header 4 font
+
+test<u>underline</u>*test*`inline codes`
 fdlakfjafjafl
 text
 
@@ -9,7 +20,10 @@ text
 
 ## Header 2 is here
 
+\# Test my header
+
 - list
+    - list2
 
 > dafsd
 > - asfdddd

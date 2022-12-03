@@ -13,18 +13,30 @@ import Graphics.Vty
   , black, withURL
   )
 import Data.Graph (components)
+import qualified Data.Text as T
+import qualified Brick.Widgets.Border.Style as BS
+import Visualizer.BigHeader
+
+borderStyles :: [(T.Text, BS.BorderStyle)]
+borderStyles =
+    [ (T.pack "ascii", BS.ascii)
+    , (T.pack "unicode", BS.unicode)
+    , (T.pack "unicode bold", BS.unicodeBold)
+    , (T.pack "unicode rounded", BS.unicodeRounded)
+    , (T.pack "from 'x'", BS.borderStyleFromChar 'x')
+    ]
 
 elementAttr :: AttrMap
 elementAttr = attrMap defAttr $
-    [ (attrName "Header1", fg red)
-    , (attrName "Header2", fg yellow)
-    , (attrName "Header3", fg green)
-    , (attrName "Header4", withStyle (fg blue) underline)
+    [ (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)
+    , (attrName "Header2", withStyle (green `on` rgbColor 179 255 153) bold)
+    , (attrName "Header3", withStyle ((rgbColor 255 153 0) `on` rgbColor 255 224 179) underline)
+    , (attrName "Header4", blue `on` rgbColor 179 217 255)
     , (attrName "Italic", withStyle defAttr italic)
     , (attrName "Bold", withStyle defAttr bold)
     , (attrName "Strikethrough", withStyle defAttr strikethrough)
     , (attrName "Underline", withStyle defAttr underline)
-    , (attrName "InlineCode", yellow `on` rgbColor 80 80 80)
+    , (attrName "InlineCode", (rgbColor 255 140 57) `on` rgbColor 34 37 41)
     , (attrName "Quote", cyan `on` rgbColor 120 120 120)
     , (attrName "Default", defAttr)
     ] ++ composition1
@@ -52,12 +64,17 @@ visualizeTextStyle _ _ = str "wait for implement"
 
 -- Element Visualizer
 visualizeElement :: MarkDownType -> Widget ()
-visualizeElement (Header "1" ts) = border $ hBox $ map (visualizeTextStyle (attrName "Header1")) ts
-visualizeElement (Header level ts) = hBox $ map (visualizeTextStyle (attrName curHeader)) ts
+visualizeElement (BigHeader s) = hBox $ map (str . fontChar) s
+visualizeElement (Header level ts) = hBox $ withAttr (attrName curHeader) (str prefix):map (visualizeTextStyle (attrName curHeader)) ts
     where
-        curHeader = "Header" ++ level
+        curHeader = "Header" ++ show level
+        prefix = prefixes !! (level - 1)
+        prefixes = ["🍓 ", "🥝 ", "🐤 ", "🦋 "]
 visualizeElement (PlainText ts) = hBox $ map (visualizeTextStyle (attrName "Default")) ts
 visualizeElement (Quote ts) = hBox $ map (visualizeTextStyle (attrName "Quote")) ts
-visualizeElement (ListBullet l ts) = hBox ((str $ spaces ++ "⚫︎ "):(map (visualizeTextStyle (attrName "Default")) ts))
+visualizeElement (ListBullet l ts) = hBox (str (spaces ++ special):map (visualizeTextStyle (attrName "Default")) ts)
     where
-        spaces = concat (replicate (((read l :: Int)-1)*4) " ")
+        spaces = concat (replicate ((l-1)*4) " ")
+        special | l `mod` 2 == 1 = "● "
+                | otherwise = "○ "
+       

@@ -27,6 +27,7 @@ library
   exposed-modules:
       MDTypes
       Parser.MDParser
+      Visualizer.BigHeader
       Visualizer.ElementVisualizer
       Visualizer.MDVisualizer
   other-modules:
@@ -35,11 +36,13 @@ library
       src
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5
+      MissingH
+    , base >=4.7 && <5
     , brick >=0.65
     , containers
     , parsec
     , split
+    , text
     , vty
   default-language: Haskell2010
 
@@ -51,12 +54,14 @@ executable terminal-md-exe
       app
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      MissingH
+    , base >=4.7 && <5
     , brick >=0.65
     , containers
     , parsec
     , split
     , terminal-md
+    , text
     , vty
   default-language: Haskell2010
 
@@ -70,7 +75,8 @@ test-suite terminal-md-test
       test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      QuickCheck
+      MissingH
+    , QuickCheck
     , base >=4.7 && <5
     , brick >=0.65
     , containers
@@ -82,5 +88,6 @@ test-suite terminal-md-test
     , tasty-hunit
     , tasty-quickcheck
     , terminal-md
+    , text
     , vty
   default-language: Haskell2010
