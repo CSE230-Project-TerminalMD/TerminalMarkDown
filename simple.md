@@ -1,4 +1,4 @@
-<bhr>terminal  markdown</bhr>
+<bhr>Terminal  Markdown</bhr>
 
 Hey I'm terminal markdown
 
