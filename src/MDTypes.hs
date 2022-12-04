@@ -3,8 +3,7 @@ module MDTypes
 MarkDownType(..),
 Slide,
 Slides,
-Block,
-SlideLater)
+SlideBlock)
 where
 
 data TextStyleType = 
@@ -30,7 +29,6 @@ data MarkDownType =
 
 type Level = Int
 
-type Block = [MarkDownType]
-type SlideLater = [Block]
-type Slide = [MarkDownType]
+type SlideBlock = [MarkDownType]
+type Slide = [SlideBlock]
 type Slides = [Slide]

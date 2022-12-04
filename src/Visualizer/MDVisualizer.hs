@@ -21,10 +21,15 @@ data MDAppState = MDAppState {
 initialState :: MDT.Slides -> IO (MDAppState)
 initialState mds = return $ MDAppState mds 0 "" ""
 
-visualizeMD :: MDAppState -> [Widget ()]
-visualizeMD (MDAppState mds i l a) = [ui]
+visualizeBlock :: MDT.SlideBlock -> Widget ()
+visualizeBlock blk = blk_ui
   where
-    ui = vBox  (map (C.center . visualizeElement) (mds!!i))
+    blk_ui = vBox  (map (C.center . visualizeElement) blk)
+
+visualizeMD :: MDAppState -> [Widget ()]
+visualizeMD (MDAppState slides i l a)
+  | length slides == 1 = [visualizeBlock (head (slides!!i))]
+  | otherwise = [hBox $ map visualizeBlock (slides!!i)]
 
 -- Main App for terminal markdown
 handleSlideEvent :: MDAppState -> BrickEvent () e -> EventM () (Next MDAppState)

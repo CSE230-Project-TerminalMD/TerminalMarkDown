@@ -97,7 +97,7 @@ parseMkd s@('#':_) = parseHeader s 0
 parseMkd ('-':' ': text) = MDT.ListBullet 1 (parseNoEither text)
 parseMkd (' ':' ':' ':' ':'-':' ': text) = MDT.ListBullet 2 (parseNoEither text)
 parseMkd ('>':' ': text) = MDT.Quote (parseNoEither text)
-parseMkd ('!':'[':'i':'m':'a':'g':'e':']': text) = MDT.SlideImage [ x | x <- text, not (x `elem` "()") ]
+parseMkd ('!':'[':'i':'m':'a':'g':'e':']': text) = MDT.SlideImage [ x | x <- text, x `notElem` "()" ]
 parseMkd text = MDT.PlainText (parseNoEither text)
 
 -- String in one slide -> List of parsed MarkDownTypes.
@@ -109,7 +109,7 @@ parseBlock context = do
                         where
                             notNewLine str =  not (isMadeOf str "\n ")
 
-parseSlide :: String -> [MDT.Block]
+parseSlide :: String -> [MDT.SlideBlock]
 parseSlide context = do
                       let blocks = splitOn "---" context 
                       fmap parseBlock blocks
