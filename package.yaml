@@ -28,6 +28,7 @@ dependencies:
 - parsec
 - split
 - MissingH
+- JuicyPixels
 
 ghc-options:
 - -Wall

@@ -3,7 +3,7 @@ module Visualizer.BigHeader
 where
 
 fontChar :: Char -> String
-fontChar 'a' = "\n\n  __ _  \n / _` | \n| (_| | \n \\__,_| \n\n\n"
+fontChar 'a' = "\n\n  __ _ \n / _` |\n| (_| |\n \\__,_|\n\n\n"
 fontChar 'b' = " _     \n| |    \n| |__  \n| '_ \\ \n| |_) |\n|_.__/  \n\n\n"
 fontChar 'c' = "\n\n  ___ \n / __|\n| (__ \n \\___|\n\n\n"
 fontChar 'd' = "     _ \n    | |\n  __| |\n / _` |\n| (_| |\n \\__,_|\n\n\n"
@@ -55,5 +55,7 @@ fontChar 'W' = "__          __\n\\ \\        / /\n \\ \\  /\\  / / \n  \\ \\/  \
 fontChar 'X' = "__   __\n\\ \\ / /\n \\ V / \n  > <  \n / . \\ \n/_/ \\_\\\n\n\n"
 fontChar 'Y' = "__     __\n\\ \\   / /\n \\ \\_/ / \n  \\   /  \n   | |   \n   |_|   \n\n\n"
 fontChar 'Z' = " ______\n|___  /\n   / / \n  / /  \n / /__ \n/_____|\n\n\n"
+fontChar '!' = " _ \n| |\n| |\n| |\n|_|\n(_)\n\n\n"
+fontChar '?' = " ___  \n|__ \\ \n   ) |\n  / / \n |_|  \n (_)  \n\n\n"
 fontChar ' ' = " \n \n \n \n \n \n \n \n "
 fontChar s = show s

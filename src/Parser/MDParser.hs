@@ -13,7 +13,7 @@ import Data.String.Utils (replace)
 
 -- Replacing Special Characters
 replaceSpecial :: String -> String
-replaceSpecial s = replace "\\>" ">" (replace "\\-" "-" (replace "\\#" "#" s))
+replaceSpecial s = replace "\\`" "`" (replace "\\>" ">" (replace "\\-" "-" (replace "\\#" "#" s)))
 
 -- Text style parsers
 

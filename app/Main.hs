@@ -6,7 +6,6 @@ import Visualizer.MDVisualizer as V
 import MDTypes as MDT
 import Data.List.Split
 import Visualizer.BigHeader
-
 import System.Environment (getArgs)
 
 main :: IO ()
@@ -16,8 +15,5 @@ main = do
   let slides = splitOn "---" content 
   let linesOfFiles = fmap P.parseSlide slides
   print linesOfFiles
-  print '\n'
-  print (show (fontChar 'A'))
   V.startTMD linesOfFiles
   return ()
-
