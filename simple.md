@@ -2,7 +2,7 @@
 
 Hey I'm terminal markdown
 
----
+===
 
 # TerminalMarkDown **bold here** another text *italic* something
 
@@ -14,6 +14,8 @@ Hey I'm terminal markdown
 
 ##### Header 5 but it's still Header 4 font
 
+---
+
 test<u>underline</u>*test*`inline codes`
 fdlakfjafjafl
 text
@@ -23,7 +25,7 @@ codes
 fjdklf
 ```
 
----
+===
 
 ## Header 2 is here
 
@@ -36,3 +38,5 @@ fjdklf
 
 > dafsd
 > - asfdddd
+
+![image](/Users/me/Desktop/test.png)

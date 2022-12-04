@@ -9,6 +9,7 @@ import qualified MDTypes as MDT
 import Text.Parsec hiding (State, between)
 import Text.Parsec.String
 import Data.List (isSuffixOf)
+import Data.List.Split
 import Data.String.Utils (replace)
 
 -- Replacing Special Characters
@@ -96,13 +97,19 @@ parseMkd s@('#':_) = parseHeader s 0
 parseMkd ('-':' ': text) = MDT.ListBullet 1 (parseNoEither text)
 parseMkd (' ':' ':' ':' ':'-':' ': text) = MDT.ListBullet 2 (parseNoEither text)
 parseMkd ('>':' ': text) = MDT.Quote (parseNoEither text)
+parseMkd ('!':'[':'i':'m':'a':'g':'e':']': text) = MDT.SlideImage [ x | x <- text, not (x `elem` "()") ]
 parseMkd text = MDT.PlainText (parseNoEither text)
 
 -- String in one slide -> List of parsed MarkDownTypes.
-parseSlide :: String -> [MDT.MarkDownType]
-parseSlide context = do
+parseBlock :: String -> [MDT.MarkDownType]
+parseBlock context = do
                         let linesOfSlide = filter notNewLine (lines context)
                         let mkdOfSlide = fmap parseMkd linesOfSlide -- fix this to MarkdownType
                         mkdOfSlide
                         where
                             notNewLine str =  not (isMadeOf str "\n ")
+
+parseSlide :: String -> [MDT.Block]
+parseSlide context = do
+                      let blocks = splitOn "---" context 
+                      fmap parseBlock blocks

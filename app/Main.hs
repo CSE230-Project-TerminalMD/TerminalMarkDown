@@ -12,8 +12,8 @@ main :: IO ()
 main = do
   args <- getArgs
   content <- readFile (args !! 0)
-  let slides = splitOn "---" content 
+  let slides = splitOn "===" content 
   let linesOfFiles = fmap P.parseSlide slides
   print linesOfFiles
-  V.startTMD linesOfFiles
+  -- V.startTMD linesOfFiles
   return ()

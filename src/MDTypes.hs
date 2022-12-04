@@ -2,7 +2,9 @@ module MDTypes
 (TextStyleType(..),
 MarkDownType(..),
 Slide,
-Slides)
+Slides,
+Block,
+SlideLater)
 where
 
 data TextStyleType = 
