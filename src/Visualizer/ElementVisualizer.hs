@@ -85,7 +85,7 @@ visualizeElement (Header level ts) =
     where
         curHeader = "Header" ++ show level
         prefix = prefixes !! (level - 1)
-        prefixes = ["🍓 ", "🥝 ", "🐤 ", "🦋 "]
+        prefixes = ["🍉 ", "🐸 ", "🐤 ", "🧊 "]
 visualizeElement (PlainText ts) = hBox $ Prelude.map (visualizeTextStyle (attrName "Default")) ts
 visualizeElement (Quote ts) =
     withBorderStyle quoteBorder $
@@ -97,7 +97,4 @@ visualizeElement (ListBullet l ts) = hBox (str (spaces ++ special):Prelude.map (
         spaces = concat (replicate ((l-1)*4) " ")
         special | l `mod` 2 == 1 = "● "
                 | otherwise = "○ "
-visualizeElement (ListBulletBlock (x:xs)) =
-    vBox [visualizeElement (uncurry ListBullet x), visualizeElement (ListBulletBlock xs)]
-visualizeElement (ListBulletBlock []) = str ""
 visualizeElement _ = str ""

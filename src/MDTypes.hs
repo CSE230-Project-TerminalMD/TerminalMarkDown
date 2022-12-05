@@ -20,7 +20,6 @@ data TextStyleType =
 data MarkDownType =
     Header Level [TextStyleType]
   | ListBullet Level [TextStyleType]
-  | ListBulletBlock [(Level, [TextStyleType])]
   | PlainText [TextStyleType]
   | Quote [TextStyleType]
   | BigHeader String

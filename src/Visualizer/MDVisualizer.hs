@@ -22,6 +22,8 @@ initialState :: MDT.Slides -> IO (MDAppState)
 initialState mds = return $ MDAppState mds 0 "" ""
 
 visualizeBlock :: MDT.SlideBlock -> Widget ()
+visualizeBlock ((MDT.ListBullet l ts) : (MDT.ListBullet l2 ts2) : xs) = C.center . vBox $ visualizeElement (MDT.ListBullet l ts) : [visualizeBlock (MDT.ListBullet l2 ts2 : xs)]
+visualizeBlock ((MDT.PlainText ts) : (MDT.PlainText ts2) : xs) = C.center . vBox $ visualizeElement (MDT.PlainText ts) : [visualizeBlock (MDT.PlainText ts2 : xs)]
 visualizeBlock blk = blk_ui
   where
     blk_ui = vBox  (map (C.center . visualizeElement) blk)
