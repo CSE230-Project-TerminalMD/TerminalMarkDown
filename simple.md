@@ -24,6 +24,7 @@ text
 codes
 fjdklf
 ```
+abc
 
 ===
 
@@ -45,3 +46,19 @@ fjdklf
 <bhr>Show Image</bhr>
 
 ![image](/Users/quan/Documents/GitHub/TerminalMarkDown/10x10test.png)
+
+===
+
+textline1
+textline2
+textline3
+textline4
+textline5
+
+---
+
+textline1
+textline2
+textline3
+textline4
+textline5

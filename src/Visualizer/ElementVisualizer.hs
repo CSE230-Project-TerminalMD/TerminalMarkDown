@@ -23,6 +23,7 @@ import Codec.Picture
 import Data.Either (isLeft, fromLeft, fromRight, rights)
 import Data.Maybe (fromJust, isNothing)
 import Data.Word (Word8)
+import Codec.Picture.Types
 
 -- Style for border
 quoteBorder :: BorderStyle
@@ -57,7 +58,7 @@ elementAttr = attrMap defAttr $
     , (attrName "Default", defAttr)
     ] ++ composition1 ++ rgbmaps
     where
-        rgbmaps = [(attrName (show (PixelRGB8 (int2Word8 r) (int2Word8 g) (int2Word8 b))), rgbColor r g b `on` rgbColor r g b) | r <- [255,254..230], g <- [255,254..150], b <- [255,254..150]]
+        rgbmaps = [(attrName (show (r, g, b)), rgbColor (r-1) (g-1) (b-1) `on` rgbColor (r-1) (g-1) (b-1)) | r <- [248,240..0], g <- [248,240..1], b <- [248,240..1]]
         composition1 = [Data.Bifunctor.bimap (fst mdt <>) (withStyle (snd mdt)) style |
                                               mdt <- [(attrName "Default", defAttr)
                                                     , (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)  
@@ -68,8 +69,6 @@ elementAttr = attrMap defAttr $
                                                       , (attrName "Bold", bold)
                                                       , (attrName "Underline", underline)
                                                       , (attrName "Strikethrough", strikethrough)]]
-int2Word8 :: Int -> Word8
-int2Word8 r = fromIntegral r
 
 -- TextStyle Visualizer
 visualizeTextStyle :: AttrName -> TextStyleType -> Widget ()
@@ -84,8 +83,17 @@ visualizeTextStyle _ _ = str "wait for implement"
 -- Image Visualizer
 visualizePixelLine :: Image PixelRGB8 -> Int -> Int -> Widget ()
 visualizePixelLine img x y 
-    | x < Codec.Picture.imageWidth img = hBox (visualizePixelLine img (x+1) y:[withAttr (attrName (show (pixelAt img x y))) (str "  ")])
+    | x < Codec.Picture.imageWidth img =
+        hBox $
+        visualizePixelLine img (x+1) y:[withAttr (attrName $
+        show (rgbValue curPixel)) (str "  ")]
     | otherwise = str ""
+    where
+        curPixel = pixelAt img x y
+        getRed (PixelRGB8 r _ _) = ((fromIntegral r :: Int) `div` 8) * 8
+        getGreen (PixelRGB8 _ g _) = ((fromIntegral g :: Int) `div` 8) * 8
+        getBlue (PixelRGB8 _ _ b) = ((fromIntegral b :: Int) `div` 8) * 8
+        rgbValue p = (getRed p, getGreen p, getBlue p)
 
 visualizeImg :: Either String DynamicImage -> Widget ()
 visualizeImg img
