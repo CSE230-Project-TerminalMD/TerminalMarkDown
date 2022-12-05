@@ -14,6 +14,6 @@ main = do
   content <- readFile (args !! 0)
   let slides = splitOn "===" content 
   let linesOfFiles = fmap P.parseSlide slides
-  -- print linesOfFiles
+  -- rint linesOfFiles
   V.startTMD linesOfFiles
   return ()

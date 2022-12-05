@@ -67,6 +67,15 @@ parseStyle = try (parseStyleBold) <|> try (parseStyleItalic) <|> try (parseStyle
 parseNoEither :: String -> [MDT.TextStyleType]
 parseNoEither text = either (const [MDT.Error "Error Message"]) id (parse parseStyle "" text)
 
+-- Extrac the image link from an image tag
+parseImage :: Parser MDT.MarkDownType
+parseImage = do
+    string "["
+    cap <- manyTill anyChar (try (string "]"))
+    string "("
+    link <- manyTill anyChar (try (string ")"))
+    return (MDT.SlideImage link)
+
 -- Checks if String A is only made of String B
 -- Reference: https://stackoverflow.com/questions/50179111/haskell-is-string-only-composed-of-characters-from-another-string
 isMadeOf :: String -> String -> Bool                                                                     
@@ -88,7 +97,6 @@ parseHeader s@('#':_:text) l = MDT.PlainText (parseNoEither (replicate l '#' ++ 
 parseHeader _ _ = error "this won't happen at all"
 
 -- Top level markdown parsers
--- Should be able to use parsers as above
 parseMkd :: String -> MDT.MarkDownType
 parseMkd s@('<':'b':'h':'r':'>':text)
   | "</bhr>" `isSuffixOf` text = MDT.BigHeader (take (length text - 6) text)
@@ -97,7 +105,7 @@ parseMkd s@('#':_) = parseHeader s 0
 parseMkd ('-':' ': text) = MDT.ListBullet 1 (parseNoEither text)
 parseMkd (' ':' ':' ':' ':'-':' ': text) = MDT.ListBullet 2 (parseNoEither text)
 parseMkd ('>':' ': text) = MDT.Quote (parseNoEither text)
-parseMkd ('!':'[':'i':'m':'a':'g':'e':']': text) = MDT.SlideImage [ x | x <- text, x `notElem` "()" ]
+parseMkd ('!': text) = either (const (MDT.ErrorBlock "Error Message")) id (parse parseImage "" text)
 parseMkd text = MDT.PlainText (parseNoEither text)
 
 -- String in one slide -> List of parsed MarkDownTypes.

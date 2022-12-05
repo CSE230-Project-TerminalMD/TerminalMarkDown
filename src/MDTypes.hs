@@ -25,6 +25,7 @@ data MarkDownType =
   | Quote [TextStyleType]
   | BigHeader String
   | SlideImage String
+  | ErrorBlock String
   deriving (Show)
 
 type Level = Int
