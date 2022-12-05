@@ -67,7 +67,7 @@ parseStyle = try (parseStyleBold) <|> try (parseStyleItalic) <|> try (parseStyle
 parseNoEither :: String -> [MDT.TextStyleType]
 parseNoEither text = either (const [MDT.Error "Error Message"]) id (parse parseStyle "" text)
 
--- Extrac the image link from an image tag
+-- Extract the image link from an image tag
 parseImage :: Parser MDT.MarkDownType
 parseImage = do
     string "["
@@ -96,17 +96,24 @@ parseHeader ('#':'#':text) l = parseHeader ('#':text) (l+1)
 parseHeader s@('#':_:text) l = MDT.PlainText (parseNoEither (replicate l '#' ++ s))
 parseHeader _ _ = error "this won't happen at all"
 
+-- Parse lists or plain text
+parseListOrPlain :: String -> MDT.MarkDownType
+parseListOrPlain s = do
+  let s2 = dropWhile (\c -> c == ' ') s
+  if (s2!!0) == '-' && (s2!!1) == ' ' && ((length s) - (length s2)) `mod` 4 == 0
+    then (MDT.ListBullet (((length s) - (length s2)) `div` 4 + 1) (parseNoEither (tail (tail s2))))
+    else (MDT.PlainText (parseNoEither s))
+
 -- Top level markdown parsers
 parseMkd :: String -> MDT.MarkDownType
 parseMkd s@('<':'b':'h':'r':'>':text)
   | "</bhr>" `isSuffixOf` text = MDT.BigHeader (take (length text - 6) text)
   | otherwise = MDT.PlainText (parseNoEither s)
 parseMkd s@('#':_) = parseHeader s 0
-parseMkd ('-':' ': text) = MDT.ListBullet 1 (parseNoEither text)
-parseMkd (' ':' ':' ':' ':'-':' ': text) = MDT.ListBullet 2 (parseNoEither text)
 parseMkd ('>':' ': text) = MDT.Quote (parseNoEither text)
 parseMkd ('!': text) = either (const (MDT.ErrorBlock "Error Message")) id (parse parseImage "" text)
-parseMkd text = MDT.PlainText (parseNoEither text)
+parseMkd ('-':' ': text) = MDT.ListBullet 1 (parseNoEither text)
+parseMkd text = parseListOrPlain text
 
 -- String in one slide -> List of parsed MarkDownTypes.
 parseBlock :: String -> [MDT.MarkDownType]
