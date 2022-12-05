@@ -40,4 +40,8 @@ fjdklf
 > dafsd
 > - asfdddd
 
-![image](/Users/me/Desktop/test.png)
+===
+
+<bhr>Show Image</bhr>
+
+![image](/Users/quan/Documents/GitHub/TerminalMarkDown/10x10test.png)
