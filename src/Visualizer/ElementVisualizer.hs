@@ -112,8 +112,11 @@ visualizeElement _ (BigHeader s) =
     hBox $
     Prelude.map (str . fontChar) s
 visualizeElement _ (Header level ts) =
-    hBox $
-    withAttr (attrName curHeader) (str prefix):Prelude.map (visualizeTextStyle (attrName curHeader)) ts
+    vBox [
+        str "\n",
+        hBox $
+        withAttr (attrName curHeader) (str prefix):Prelude.map (visualizeTextStyle (attrName curHeader)) ts,
+        str "\n"]
     where
         curHeader = "Header" ++ show level
         prefix = prefixes !! (level - 1)

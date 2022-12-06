@@ -1,6 +1,20 @@
+Hey I'm first column
+
+---
+
+Hey I'm second column
+
+===
+
 <bhr>Terminal  Markdown</bhr>
 
+---
+
 Hey I'm terminal markdown
+
+---
+
+Hey I'm second column
 
 ===
 
@@ -74,3 +88,7 @@ textline2
 textline3
 textline4
 textline5
+
+===
+
+![nothing](./z.png)

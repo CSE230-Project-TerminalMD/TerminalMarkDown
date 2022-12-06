@@ -56,22 +56,28 @@ initialState markdowns =
 
 visualizeBlock :: Map.Map String (Either String DynamicImage) -> MDT.SlideBlock -> Widget ()
 visualizeBlock images ((MDT.PlainText ts) : xs) =
-  vBox $ visualizeElement images (MDT.PlainText ts) : [visualizeBlock images xs]
+  vBox (C.hCenterLayer (visualizeElement images (MDT.PlainText ts)) : [visualizeBlock images xs])
 
 visualizeBlock images ((MDT.ListBullet l ts) : xs) =
-  vBox $ visualizeElement images (MDT.ListBullet l ts) : [visualizeBlock images xs]
+  vBox (C.hCenterLayer (visualizeElement images (MDT.ListBullet l ts)) : [visualizeBlock images xs])
 
 visualizeBlock images (x: (MDT.PlainText ts2) : xs) =
-  C.center . vBox $ visualizeBlock images [x] : visualizeBlock images [MDT.PlainText ts2] : [visualizeBlock images xs]
+  C.hCenter . vBox $ visualizeBlock images [x] : visualizeBlock images [MDT.PlainText ts2] : [visualizeBlock images xs]
 
 visualizeBlock images blk = blk_ui
   where
-    blk_ui = vBox  (map (C.center . visualizeElement images) blk)
+    blk_ui = vBox  (map (C.hCenter . visualizeElement images) blk)
 
 visualizeMD :: MDAppState -> [Widget ()]
 visualizeMD (MDAppState slides i images l a)
-  | length slides == 1 = [visualizeBlock images (head (slides!!i))]
-  | otherwise = [hBox $ map (visualizeBlock images) (slides!!i)]
+  | length slides == 1 = [C.center $ visualizeBlock images (head (slides!!i))]
+  | otherwise = [C.center $ visualizeIfBigHeader (slides!!i)]
+    where
+      visualizeIfBigHeader ([MDT.BigHeader s]:bs) =
+        vBox
+        [vLimit 20 (C.center (visualizeBlock images [MDT.BigHeader s])),
+        visualizeIfBigHeader bs]
+      visualizeIfBigHeader slide = hBox $ map (visualizeBlock images) slide
 
 -- Main App for terminal markdown
 handleSlideEvent :: MDAppState -> BrickEvent () e -> EventM () (Next MDAppState)
