@@ -44,4 +44,4 @@ fjdklf
 
 <bhr>Show Image</bhr>
 
-![image](/Users/quan/Documents/GitHub/TerminalMarkDown/10x10test.png)
+![image](./issei.png)
