@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-unused-top-binds #-}
+{-# OPTIONS_GHC -Wno-unused-matches #-}
 module Visualizer.MDVisualizer
 (startTMD)
 where
@@ -7,11 +9,9 @@ import Visualizer.ElementVisualizer
 import qualified Brick.Widgets.Center as C
 import Brick.Main as M
 import qualified Graphics.Vty as V
-import qualified Brick.Types as T
 import Brick
 import qualified Data.Map as Map
 import Codec.Picture
-import Graphics.Vty (Vty(nextEvent))
 
 -- Naive Implementation for App State
 data MDAppState = MDAppState {

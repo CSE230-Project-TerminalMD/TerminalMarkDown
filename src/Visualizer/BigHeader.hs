@@ -57,5 +57,6 @@ fontChar 'Y' = "__     __\n\\ \\   / /\n \\ \\_/ / \n  \\   /  \n   | |   \n   |
 fontChar 'Z' = " ______\n|___  /\n   / / \n  / /  \n / /__ \n/_____|\n\n\n"
 fontChar '!' = " _ \n| |\n| |\n| |\n|_|\n(_)\n\n\n"
 fontChar '?' = " ___  \n|__ \\ \n   ) |\n  / / \n |_|  \n (_)  \n\n\n"
+fontChar '+' = "    _    \n   | |   \n __| |__ \n|__   __|\n   | |   \n   |_|   \n\n\n"
 fontChar ' ' = " \n \n \n \n \n \n \n \n "
 fontChar s = show s

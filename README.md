@@ -2,7 +2,6 @@
 
 ## Members
 - Z (Ziang) Xiao
-- Francis Kim
 - Issei Mori
 - Quan Luo
 
