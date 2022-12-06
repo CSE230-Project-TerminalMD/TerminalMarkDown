@@ -1,3 +1,9 @@
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use fromRight" #-}
+{-# HLINT ignore "Avoid lambda using `infix`" #-}
+{-# HLINT ignore "Use head" #-}
+{-# OPTIONS_GHC -Wno-unused-matches #-}
+{-# OPTIONS_GHC -Wno-unused-do-bind #-}
 module Parser.MDParser
 (parseSlide,
 parseStylePlain,
@@ -30,38 +36,38 @@ parseStyleBold = do
                     s1 <- manyTill anyChar (try (string "**"))
                     text <- manyTill anyChar (try (string "**"))
                     s2 <- many anyChar
-                    return ((parseNoEither s1) ++ [MDT.Bold text] ++ (parseNoEither s2))
+                    return (parseNoEither s1 ++ [MDT.Bold text] ++ parseNoEither s2)
 
 parseStyleItalic :: Parser [MDT.TextStyleType]
 parseStyleItalic = do
                     s1 <- manyTill anyChar (try (string "*"))
                     text <- manyTill anyChar (try (string "*"))
                     s2 <- many anyChar
-                    return ((parseNoEither s1) ++ [MDT.Italic text] ++ (parseNoEither s2))
+                    return (parseNoEither s1 ++ [MDT.Italic text] ++ parseNoEither s2)
 
 parseStyleStrikeThrough :: Parser [MDT.TextStyleType]
 parseStyleStrikeThrough = do
                             s1 <- manyTill anyChar (try (string "~~"))
                             text <- manyTill anyChar (try (string "~~"))
                             s2 <- many anyChar
-                            return ((parseNoEither s1) ++ [MDT.Strikethrough text] ++ (parseNoEither s2))
+                            return (parseNoEither s1 ++ [MDT.Strikethrough text] ++ parseNoEither s2)
 
 parseStyleUnderline :: Parser [MDT.TextStyleType]
 parseStyleUnderline = do
                             s1 <- manyTill anyChar (try (string "<u>"))
                             text <- manyTill anyChar (try (string "</u>"))
                             s2 <- many anyChar
-                            return ((parseNoEither s1) ++ [MDT.Underline text] ++ (parseNoEither s2))
+                            return (parseNoEither s1 ++ [MDT.Underline text] ++ parseNoEither s2)
 
 parseStyleInlineCode :: Parser [MDT.TextStyleType]
 parseStyleInlineCode = do
                             s1 <- manyTill anyChar (try (string "`"))
                             text <- manyTill anyChar (try (string "`"))
                             s2 <- many anyChar
-                            return ((parseNoEither s1) ++ [MDT.InlineCode text] ++ (parseNoEither s2))
+                            return (parseNoEither s1 ++ [MDT.InlineCode text] ++ parseNoEither s2)
 
 parseStyle :: Parser [MDT.TextStyleType]
-parseStyle = try (parseStyleBold) <|> try (parseStyleItalic) <|> try (parseStyleStrikeThrough) <|> try (parseStyleUnderline) <|> try (parseStyleInlineCode) <|> parseStylePlain
+parseStyle = try parseStyleBold <|> try parseStyleItalic <|> try parseStyleStrikeThrough <|> try parseStyleUnderline <|> try parseStyleInlineCode <|> parseStylePlain
 
 -- Return empty string if parsing fails
 parseNoEither :: String -> [MDT.TextStyleType]
@@ -78,7 +84,7 @@ parseImage = do
 
 -- Checks if String A is only made of String B
 -- Reference: https://stackoverflow.com/questions/50179111/haskell-is-string-only-composed-of-characters-from-another-string
-isMadeOf :: String -> String -> Bool                                                                     
+isMadeOf :: String -> String -> Bool
 isMadeOf "" _ = True
 isMadeOf xs alpha =
   case dropWhile (`elem` alpha) xs of
@@ -100,9 +106,9 @@ parseHeader _ _ = error "this won't happen at all"
 parseListOrPlain :: String -> MDT.MarkDownType
 parseListOrPlain s = do
   let s2 = dropWhile (\c -> c == ' ') s
-  if (s2!!0) == '-' && (s2!!1) == ' ' && ((length s) - (length s2)) `mod` 4 == 0
-    then (MDT.ListBullet (((length s) - (length s2)) `div` 4 + 1) (parseNoEither (tail (tail s2))))
-    else (MDT.PlainText (parseNoEither s))
+  if (s2!!0) == '-' && (s2!!1) == ' ' && (length s - length s2) `mod` 4 == 0
+    then MDT.ListBullet ((length s - length s2) `div` 4 + 1) (parseNoEither (tail (tail s2)))
+    else MDT.PlainText (parseNoEither s)
 
 -- Top level markdown parsers
 parseMkd :: String -> MDT.MarkDownType
@@ -126,5 +132,5 @@ parseBlock context = do
 
 parseSlide :: String -> [MDT.SlideBlock]
 parseSlide context = do
-                      let blocks = splitOn "---" context 
+                      let blocks = splitOn "---" context
                       fmap parseBlock blocks
