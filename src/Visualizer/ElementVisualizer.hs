@@ -40,8 +40,8 @@ elementAttr :: AttrMap
 elementAttr = attrMap defAttr $
     [ (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)
     , (attrName "Header2", withStyle (green `on` rgbColor 179 255 153) bold)
-    , (attrName "Header3", withStyle (rgbColor 255 153 0 `on` rgbColor 255 224 179) underline)
-    , (attrName "Header4", blue `on` rgbColor 179 217 255)
+    , (attrName "Header3", withStyle (rgbColor 255 153 0 `on` rgbColor 255 224 179) bold)
+    , (attrName "Header4", withStyle (rgbColor 8 76 131 `on` rgbColor 179 217 255) bold)
     , (attrName "Italic", withStyle defAttr italic)
     , (attrName "snakeAttr", blue `on` blue)
     , (attrName "Bold", withStyle defAttr bold)
@@ -56,7 +56,7 @@ elementAttr = attrMap defAttr $
         composition1 = [Data.Bifunctor.bimap (fst mdt <>) (withStyle (snd mdt)) style |
                                               mdt <- [(attrName "Default", defAttr)
                                                     , (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)
-                                                    , (attrName "Header2", withStyle (green `on` rgbColor 179 255 153) bold)
+                                                    , (attrName "Header2", withStyle (rgbColor 28 87 32 `on` rgbColor 179 255 153) bold)
                                                     , (attrName "Header3", withStyle (rgbColor 255 153 0 `on` rgbColor 255 224 179) underline)
                                                     , (attrName "Header4", blue `on` rgbColor 179 217 255)],
                                               style <- [(attrName "Italic", italic )
