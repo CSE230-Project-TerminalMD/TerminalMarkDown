@@ -52,7 +52,7 @@ elementAttr = attrMap defAttr $
     , (attrName "Default", defAttr)
     ] ++ composition1 ++ rgbmaps
     where
-        rgbmaps = [(attrName (show (r, g, b)), rgbColor (r-1) (g-1) (b-1) `on` rgbColor (r-1) (g-1) (b-1)) | r <- [248,240..0], g <- [248,240..1], b <- [248,240..1]]
+        rgbmaps = [(attrName (show (r, g, b)), rgbColor r g b `on` rgbColor r g b) | r <- [248,240..0], g <- [248,240..0], b <- [248,240..0]]
         composition1 = [Data.Bifunctor.bimap (fst mdt <>) (withStyle (snd mdt)) style |
                                               mdt <- [(attrName "Default", defAttr)
                                                     , (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)
