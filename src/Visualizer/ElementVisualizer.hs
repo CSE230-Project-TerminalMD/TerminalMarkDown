@@ -69,8 +69,6 @@ elementAttr = attrMap defAttr $
                                                       , (attrName "Bold", bold)
                                                       , (attrName "Underline", underline)
                                                       , (attrName "Strikethrough", strikethrough)]]
-int2Word8 :: Int -> Word8
-int2Word8 r = fromIntegral r
 
 -- TextStyle Visualizer
 visualizeTextStyle :: AttrName -> TextStyleType -> Widget ()
@@ -100,7 +98,9 @@ visualizePixelLine img x y
 visualizeImg :: Either String DynamicImage -> Widget ()
 visualizeImg img
     | isLeft img = str "❌ Image Not Found"
-    | otherwise = vLimit (Codec.Picture.imageHeight rgbimg) $ vBox [visualizePixelLine rgbimg 0 y | y <- [0..(Codec.Picture.imageHeight rgbimg)]]
+    | otherwise =
+        vLimit (Codec.Picture.imageHeight rgbimg) $
+        vBox [visualizePixelLine rgbimg 0 y | y <- [0..(Codec.Picture.imageHeight rgbimg)]]
         where
             rgbimg = convertRGB8 $ head (rights [img])
 
@@ -121,13 +121,17 @@ visualizeElement _ (Header level ts) =
         curHeader = "Header" ++ show level
         prefix = prefixes !! (level - 1)
         prefixes = ["🍉 ", "🐸 ", "🐤 ", "💎 "]
-visualizeElement _ (PlainText ts) = hBox $ Prelude.map (visualizeTextStyle (attrName "Default")) ts
+visualizeElement _ (PlainText ts) =
+    hBox $
+    Prelude.map (visualizeTextStyle (attrName "Default")) ts
 visualizeElement _ (Quote ts) =
     withBorderStyle quoteBorder $
     border $
     hBox $
     [str " "] ++ Prelude.map (visualizeTextStyle (attrName "Quote")) ts ++ [str " "]
-visualizeElement _ (ListBullet l ts) = hBox (str (spaces ++ special):Prelude.map (visualizeTextStyle (attrName "Default")) ts)
+visualizeElement _ (ListBullet l ts) =
+    hBox $
+    str (spaces ++ special):Prelude.map (visualizeTextStyle (attrName "Default")) ts
     where
         spaces = concat (replicate ((l-1)*4) " ")
         special | l `mod` 2 == 1 = "● "
