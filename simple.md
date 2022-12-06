@@ -51,10 +51,23 @@ fjdklf
 textline1
 textline2
 textline3
+
+## Header 4 is here
+
+---
+
+textline1
+textline2
+textline3
+
+## Header 4 is here
+
 textline4
 textline5
 
 ---
+
+## Header 4 is here
 
 textline1
 textline2

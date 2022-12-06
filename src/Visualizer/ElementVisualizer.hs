@@ -23,6 +23,7 @@ import Codec.Picture
 import Data.Either (isLeft, fromLeft, fromRight, rights)
 import Data.Maybe (fromJust, isNothing)
 import Data.Word (Word8)
+import Data.IMap (Run(len))
 
 -- Style for border
 quoteBorder :: BorderStyle

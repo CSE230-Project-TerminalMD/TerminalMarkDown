@@ -11,6 +11,7 @@ import qualified Brick.Types as T
 import Brick
 import qualified Data.Map as Map
 import Codec.Picture
+import Graphics.Vty (Vty(nextEvent))
 
 -- Naive Implementation for App State
 data MDAppState = MDAppState {
@@ -54,12 +55,15 @@ initialState markdowns =
     return $ MDAppState markdowns 0 imgMap "" ""
 
 visualizeBlock :: Map.Map String (Either String DynamicImage) -> MDT.SlideBlock -> Widget ()
-visualizeBlock images ((MDT.ListBullet l ts) : (MDT.ListBullet l2 ts2) : xs) =
-  C.center . vBox $
-  visualizeElement images (MDT.ListBullet l ts) : [visualizeBlock images (MDT.ListBullet l2 ts2 : xs)]
-visualizeBlock images ((MDT.PlainText ts) : (MDT.PlainText ts2) : xs) =
-  C.center . vBox $
-  visualizeElement images (MDT.PlainText ts) : [visualizeBlock images (MDT.PlainText ts2 : xs)]
+visualizeBlock images ((MDT.PlainText ts) : xs) =
+  vBox $ visualizeElement images (MDT.PlainText ts) : [visualizeBlock images xs]
+
+visualizeBlock images ((MDT.ListBullet l ts) : xs) =
+  vBox $ visualizeElement images (MDT.ListBullet l ts) : [visualizeBlock images xs]
+
+visualizeBlock images (x: (MDT.PlainText ts2) : xs) =
+  C.center . vBox $ visualizeBlock images [x] : visualizeBlock images [MDT.PlainText ts2] : [visualizeBlock images xs]
+
 visualizeBlock images blk = blk_ui
   where
     blk_ui = vBox  (map (C.center . visualizeElement images) blk)
