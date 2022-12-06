@@ -7,17 +7,17 @@
 ---
 
 ![q](quan.png)
-Quan
+## Quan
 
 ---
 
 ![i](issei.png)
-Issei
+### Issei
 
 ---
 
 ![z](z.png)
-Z
+#### Z
 
 ===
 

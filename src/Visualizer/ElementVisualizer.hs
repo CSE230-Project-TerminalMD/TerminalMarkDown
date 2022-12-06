@@ -1,3 +1,5 @@
+{-# OPTIONS_GHC -Wno-type-defaults #-}
+{-# OPTIONS_GHC -Wno-unused-top-binds #-}
 module Visualizer.ElementVisualizer
 (visualizeElement,
 elementAttr)
@@ -8,22 +10,14 @@ import Brick
 import Graphics.Vty.Attributes
 import Data.Bifunctor
 import Brick.Widgets.Border
-import Graphics.Vty
-  ( Attr, white, blue, cyan, green, red, yellow
-  , black, withURL, imageHeight
-  )
-import Data.Graph (components)
-import qualified Data.Text as T
-import qualified Brick.Widgets.Border.Style as BS
 import Visualizer.BigHeader
 import Brick.Widgets.Border.Style ( BorderStyle(..) )
-import Brick.Widgets.Center (hCenter, vCenter)
+import Brick.Widgets.Center (vCenter)
 import qualified Data.Map as Map
 import Codec.Picture
-import Data.Either (isLeft, fromLeft, fromRight, rights)
+import Data.Either (isLeft, rights)
 import Data.Maybe (fromJust, isNothing)
 import Data.Word (Word8)
-import Data.IMap (Run(len))
 
 -- Style for border
 quoteBorder :: BorderStyle
@@ -46,15 +40,15 @@ elementAttr :: AttrMap
 elementAttr = attrMap defAttr $
     [ (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)
     , (attrName "Header2", withStyle (green `on` rgbColor 179 255 153) bold)
-    , (attrName "Header3", withStyle ((rgbColor 255 153 0) `on` rgbColor 255 224 179) underline)
+    , (attrName "Header3", withStyle (rgbColor 255 153 0 `on` rgbColor 255 224 179) underline)
     , (attrName "Header4", blue `on` rgbColor 179 217 255)
     , (attrName "Italic", withStyle defAttr italic)
     , (attrName "snakeAttr", blue `on` blue)
     , (attrName "Bold", withStyle defAttr bold)
     , (attrName "Strikethrough", withStyle defAttr strikethrough)
     , (attrName "Underline", withStyle defAttr underline)
-    , (attrName "InlineCode", (rgbColor 255 140 57) `on` rgbColor 34 37 41)
-    , (attrName "Quote", rgbColor 30 30 30 `on` rgbColor 120 120 120)
+    , (attrName "InlineCode", rgbColor 210 92 2 `on` rgbColor 255 140 57)
+    , (attrName "Quote", rgbColor 200 200 200 `on` rgbColor 10 10 10)
     , (attrName "Default", defAttr)
     ] ++ composition1 ++ rgbmaps
     where
@@ -70,7 +64,7 @@ elementAttr = attrMap defAttr $
                                                       , (attrName "Underline", underline)
                                                       , (attrName "Strikethrough", strikethrough)]]
 int2Word8 :: Int -> Word8
-int2Word8 r = fromIntegral r
+int2Word8 = fromIntegral
 
 -- TextStyle Visualizer
 visualizeTextStyle :: AttrName -> TextStyleType -> Widget ()
