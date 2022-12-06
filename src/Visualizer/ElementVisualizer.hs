@@ -60,9 +60,9 @@ elementAttr = attrMap defAttr $
         rgbmaps = [(attrName (show (r, g, b)), rgbColor (r-1) (g-1) (b-1) `on` rgbColor (r-1) (g-1) (b-1)) | r <- [248,240..0], g <- [248,240..1], b <- [248,240..1]]
         composition1 = [Data.Bifunctor.bimap (fst mdt <>) (withStyle (snd mdt)) style |
                                               mdt <- [(attrName "Default", defAttr)
-                                                    , (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)  
+                                                    , (attrName "Header1", withStyle (red `on` rgbColor 255 179 179) bold)
                                                     , (attrName "Header2", withStyle (green `on` rgbColor 179 255 153) bold)
-                                                    , (attrName "Header3", withStyle ((rgbColor 255 153 0) `on` rgbColor 255 224 179) underline)
+                                                    , (attrName "Header3", withStyle (rgbColor 255 153 0 `on` rgbColor 255 224 179) underline)
                                                     , (attrName "Header4", blue `on` rgbColor 179 217 255)],
                                               style <- [(attrName "Italic", italic )
                                                       , (attrName "Bold", bold)
@@ -83,7 +83,7 @@ visualizeTextStyle _ _ = str "wait for implement"
 
 -- Image Visualizer
 visualizePixelLine :: Image PixelRGB8 -> Int -> Int -> Widget ()
-visualizePixelLine img x y 
+visualizePixelLine img x y
     | x < Codec.Picture.imageWidth img =
         hBox $
         visualizePixelLine img (x+1) y:[withAttr (attrName $
@@ -116,7 +116,7 @@ visualizeElement _ (Header level ts) =
     where
         curHeader = "Header" ++ show level
         prefix = prefixes !! (level - 1)
-        prefixes = ["🍉 ", "🐸 ", "🐤 ", "🧊 "]
+        prefixes = ["🍉 ", "🐸 ", "🐤 ", "💎 "]
 visualizeElement _ (PlainText ts) = hBox $ Prelude.map (visualizeTextStyle (attrName "Default")) ts
 visualizeElement _ (Quote ts) =
     withBorderStyle quoteBorder $
