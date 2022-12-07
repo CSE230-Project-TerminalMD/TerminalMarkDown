@@ -43,7 +43,6 @@ elementAttr = attrMap defAttr $
     , (attrName "Header3", withStyle (rgbColor 255 153 0 `on` rgbColor 255 224 179) bold)
     , (attrName "Header4", withStyle (rgbColor 8 76 131 `on` rgbColor 179 217 255) bold)
     , (attrName "Italic", withStyle defAttr italic)
-    , (attrName "snakeAttr", blue `on` blue)
     , (attrName "Bold", withStyle defAttr bold)
     , (attrName "Strikethrough", withStyle defAttr strikethrough)
     , (attrName "Underline", withStyle defAttr underline)

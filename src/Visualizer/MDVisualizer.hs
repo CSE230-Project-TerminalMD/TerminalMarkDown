@@ -75,7 +75,7 @@ visualizeMD (MDAppState slides i images l a)
     where
       visualizeIfBigHeader ([MDT.BigHeader s]:bs) =
         vBox
-        [vLimit 20 (C.center (visualizeBlock images [MDT.BigHeader s])),
+        [vLimit 12 (C.center (visualizeBlock images [MDT.BigHeader s])),
         visualizeIfBigHeader bs]
       visualizeIfBigHeader slide = hBox $ map (visualizeBlock images) slide
 
