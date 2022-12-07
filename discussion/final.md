@@ -27,21 +27,21 @@ He also takes the team logistics and coordination.
 <bhr>Overview</bhr>
 ---
 # What does it do?
-- Take a Markdown file from the user    
-- Parse into predefined interfaces      
+- Take a Markdown file from the user      
+- Parse into predefined interfaces        
 - Visualize the content in terminal window
 ---
 ### Example usage
-- Install the app with stack  
+- Install the app with stack   
     - `stack build`           
 - Input a Markdown file and run
     - `stack run simple.md`   
 ---
 #### Features
-- Interactive TUI                 
-- Markdown syntax                 
-- Page control                    
-- Beautiful layout and design     
+- Interactive TUI                  
+- Markdown syntax                  
+- Page control                     
+- Beautiful layout and design      
 - Terminal preview of Markdown file
 - **A cool tool to present!          **
 ===
@@ -60,8 +60,8 @@ He also takes the team logistics and coordination.
  <bhr>Big title on next page</bhr>
 ---
 ## Parser
-1. Split the markdown file into **Slides**.                         
-2. Split the slides into **SlideBlocks** (columns).                 
+1. Split the markdown file into **Slides**.                          
+2. Split the slides into **SlideBlocks** (columns).                  
 3. Identify each line is Header, List, Qote, Image, or Plain Text.
 4. Parse each line to identify the styles (bold, italics, etc.)   
 ---
@@ -93,8 +93,8 @@ He also takes the team logistics and coordination.
 - `handleEvent` - switch ppt page     
 ---
 ## Visualizing One Slide
-- `visualizeBlock` - care for block layout   
-- `visualizeMD` - care for markdown type     
+- `visualizeBlock` - care for block layout    
+- `visualizeMD` - care for markdown type      
 - `visualizeText` - care for specific elements
 ===
 <bhr>Architecture</bhr>
@@ -102,13 +102,13 @@ He also takes the team logistics and coordination.
 <bhr>Unit  Test  +  Development</bhr>
 ---
 ### Unit Test
-- `Test.tasty` framework for testing 
+- `Test.tasty` framework for testing  
 - Multiple unittest added during dev
 - Push hook before pushing to remote
 ---
 #### Development
 - Fixed interface at the first meeting
-- Independent development            
+- Independent development             
     - parser                         
     - visualizer                     
 ===
@@ -119,9 +119,9 @@ He also takes the team logistics and coordination.
 <bhr>Parser</bhr>
 ---
 ### <u>Nested</u> structures
-- Design to parse the nested structures
+- Design to parse the nested structures                            
 - "Underline" inside a Header needs to be aware of the outer style.
-- Generalize to multi-level of lists.
+- Generalize to multi-level of lists.                              
  
 ===
 <bhr>Challenges</bhr>
@@ -130,12 +130,12 @@ He also takes the team logistics and coordination.
 ---
 #### Manipulation on Brick `widgets`
 - Alignment                          
-    - Left align vs. center align        
+    - Left align vs. center align          
 - Layout                             
-    - Element as minimal visualized unit  
+    - Element as minimal visualized unit   
     - Element encapsulated by content block
         - Differentiate for each Markdown type
-        - Differentiate according to context 
+        - Differentiate according to context  
 ### Styling is very interesting!
 Colors and emojis are fun.
 🍉  🐸  🐤  💎
