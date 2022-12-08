@@ -1,42 +1,22 @@
 # TerminalMarkDown
 
-## Members
-- Z (Ziang) Xiao
-- Issei Mori
-- Quan Luo
-
-TerminalMarkDown takes a MarkDown file from the user, and displays it in preview mode in a terminal tab.
+This is UCSD FA22 CSE230 course project. TerminalMarkDown takes a MarkDown file from the user, and displays it in preview mode (present) in a terminal tab.
 
 Example Usage
-```terminalMarkDown example.md```
+```stack run simple.md```
 
-## Basic
+## Members
+
+![](members.png)
+
+## Basic Fonts
 - Emphasis (italics, bold, underline)
 - Background Highlight
 - Code Blocks
 - Headers
 - Nested Lists
-- Links
 
-## Stretch advanced goals
+## Advanced Features
 - Slide Change [Markdown PowerPoint](https://sli.dev/guide/syntax.html)
 - Pixelized images
-- Animation
-- Graph
-- Syntax Highlight for Haskell
-
-## Timeline
-Nov. 16th
-- Creating installable Haskell app
-- Reading files
-- Displaying stylized characters on terminal
-
-Nov. 23rd Project updates
-- Implement basic features (emphasis, color, lists, links)
-
-Nov. 30th
-- Keep working
-
-Dec. 7th Project Presentation
-- Record presentation
-
+- Big Headers
