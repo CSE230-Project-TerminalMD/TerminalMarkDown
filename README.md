@@ -1,4 +1,4 @@
-# TerminalMarkDown
+# TerminalPresentation
 
 This is UCSD FA22 CSE230 course project. TerminalMarkDown takes a MarkDown file from the user, and displays it in preview mode (present) in a terminal tab.
 
@@ -20,3 +20,4 @@ Example Usage
 - Slide Change [Markdown PowerPoint](https://sli.dev/guide/syntax.html)
 - Pixelized images
 - Big Headers
+- Column-based layout
